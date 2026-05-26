@@ -9,6 +9,13 @@ export default function HedgehogClicker() {
   const [timeLeft, setTimeLeft] = useState(10);
   const [gameState, setGameState] = useState<"idle" | "playing" | "done">("idle");
   const [hedgehogSize, setHedgehogSize] = useState(1);
+
+  const altEmoji = posthog.getFeatureFlag('alt-emoji');
+  const emojiMap: Record<string, string> = { hedgehog: '🦔', cat: '🐱', dog: '🐶', hamster: '🐹' };
+  const emoji = emojiMap[altEmoji as string] || '🦔';
+  const nameMap: Record<string, string> = { hedgehog: 'Hedgehog', cat: 'Cat', dog: 'Dog', hamster: 'Hamster' };
+  const animalName = nameMap[altEmoji as string] || 'Hedgehog';
+  const gameName = `${emoji} ${animalName} Clicker`;
   const clicksRef = useRef(0);
 
   useEffect(() => {
@@ -47,8 +54,8 @@ export default function HedgehogClicker() {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-orange-950 to-zinc-900 text-white p-8">
       <Link href="/" className="absolute top-6 left-6 text-zinc-400 hover:text-white transition-colors">&larr; Back</Link>
 
-      <h1 className="text-4xl font-bold mb-2">🦔 Hedgehog Clicker</h1>
-      <p className="text-zinc-400 mb-8">Click the hedgehog as fast as you can!</p>
+      <h1 className="text-4xl font-bold mb-2">{gameName}</h1>
+      <p className="text-zinc-400 mb-8">Click the {animalName.toLowerCase()} as fast as you can!</p>
 
       {gameState === "idle" && (
         <button
@@ -77,14 +84,14 @@ export default function HedgehogClicker() {
             className="select-none active:scale-95 transition-transform cursor-pointer"
             style={{ transform: `scale(${hedgehogSize})`, fontSize: "8rem" }}
           >
-            🦔
+            {emoji}
           </button>
         </>
       )}
 
       {gameState === "done" && (
         <div className="text-center">
-          <div className="text-8xl mb-4">🦔</div>
+          <div className="text-8xl mb-4">{emoji}</div>
           <p className="text-3xl font-bold mb-2">
             {clicks} clicks!
           </p>
