@@ -11,9 +11,9 @@ export default function HedgehogClicker() {
   const [hedgehogSize, setHedgehogSize] = useState(1);
 
   const altEmoji = posthog.getFeatureFlag('alt-emoji');
-  const emojiMap: Record<string, string> = { hedgehog: '🦔', cat: '🐱', dog: '🐶', hamster: '🐹' };
+  const emojiMap: Record<string, string> = { control: '🦔', cat: '🐱', dog: '🐶', hamster: '🐹' };
   const emoji = emojiMap[altEmoji as string] || '🦔';
-  const nameMap: Record<string, string> = { hedgehog: 'Hedgehog', cat: 'Cat', dog: 'Dog', hamster: 'Hamster' };
+  const nameMap: Record<string, string> = { control: 'Hedgehog', cat: 'Cat', dog: 'Dog', hamster: 'Hamster' };
   const animalName = nameMap[altEmoji as string] || 'Hedgehog';
   const gameName = `${emoji} ${animalName} Clicker`;
   const clicksRef = useRef(0);
